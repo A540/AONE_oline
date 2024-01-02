@@ -1,0 +1,435 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- metiralicon -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined"
+          rel="stylesheet">
+
+    <!--jquery link -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <title> AONE {{ username }} </title>
+</head>
+
+<style>
+    table {
+        width: 98%;
+        border-collapse: separate;
+        border: solid #000000;
+        border-width: 2px;
+        table-layout: fixed;
+    }
+
+    th, td {
+        border: 1px solid #000000;
+        margin: 1px;
+        word-break: break-word;
+        font-size: 14px;
+    }
+
+    .modal_overlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+    }
+
+    .modal_window {
+        background: white;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        width: 800px;
+        height: 670px;
+        position: relative;
+        padding: 10px;
+    }
+
+    .modal_title {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .modal_title_side {
+        flex: 0 0 40px;
+        text-align: center;
+    }
+
+    .modal_log {
+        outline: 2px dashed black;
+        outline-offset: -10px;
+        transition: all .15s ease-in-out;
+        width: 780px;
+        height: 620px;
+        text-align: left;
+        line-height: 548px;
+    }
+</style>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Aone</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">배차일지</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">출력</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/logout">
+                        <button class="material-symbols-outlined" style="border: none; background-color: #F8F9FA">
+                            logout
+                        </button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button id="nav_bar_add_box" class="material-icons-outlined"
+                    style="border: none; outline: none; background-color: #F8F9FA">add_box
+            </button>
+        </div>
+    </div>
+</nav>
+<div style="display: flex; flex-direction: column">
+    <div style="display: flex; flex-direction: row; justify-content: center; text-align: center; width: 100%">
+        <div style="width: 100%">
+            <p style="padding: 10px; font-size: 20px">전체 일지</p>
+        </div>
+        <div style="margin-right: 30px">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    월
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    {% for mon in month %}
+                        <li><a class="dropdown-item" href="{% url 'get_logs_by_month' mon.month %}"
+                               data-month="{{ mon.month }}">{{ mon.month }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center; text-align: center; width: 100%;">
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 90px">날짜</th>
+                <th>화주</th>
+                <th>상차지</th>
+                <th style="width: 120px">전화번호</th>
+                <th style="width: 63px">수량</th>
+                <th style="width: 80px">중량</th>
+                <th>용적</th>
+                <th>SIZE</th>
+                <th>하차지</th>
+                <th style="width: 60px">담당자</th>
+                <th style="width: 40px">시간</th>
+                <th>운송사</th>
+                <th style="width: 125px">차번</th>
+                <th style="width: 120px">연락처</th>
+                <th style="width: 40px">삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for log in log_list %}
+                <tr>
+                    <td>{{ log.date|date:"n/d D" }}</td>
+                    <td>{{ log.cargo }}</td>
+                    <td>{{ log.load }}</td>
+                    <td>{{ log.load_pn }}</td>
+                    <td>{{ log.qty }}</td>
+                    <td>{{ log.gw }}</td>
+                    <td>{{ log.cbm }}</td>
+                    <td>{{ log.size }}</td>
+                    <td>{{ log.unload }}</td>
+                    <td>{{ log.pic }}</td>
+                    <td>{{ log.load_t }}</td>
+                    <td>{{ log.transport }}</td>
+                    <td>{{ log.vn }}</td>
+                    <td>{{ log.transport_pn }}</td>
+                    <td>
+                        <button class="delete-log-button material-icons-outlined"
+                                data-log-id="{{ log.id }}"
+                                style="border: none; outline: none; background-color: #F8F9FA">
+                            delete
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+-->
+<!--jquery link -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<!-- first modal -->
+<div id="modal_add_feed" class="modal_overlay">
+    <div class="modal_window">
+        <div class="modal_title">
+            <div class="modal_title_side"></div>
+            <div> 일지 추가</div>
+            <div class="modal_title_side">
+                <div style="display: flex; flex-direction: row">
+                    <button id="log_upload" class="material-icons-outlined"
+                            style="border: none; outline: none; background-color: white">
+                        done
+                    </button>
+                    <button id="close_modal" class="material-icons-outlined"
+                            style="border: none; outline: none; background-color: white">
+                        close
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="modal_log">
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">날짜</span>
+                <input type="date" id="date_log" class="form-control" placeholder="date" aria-label="date"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">화주</span>
+                <input id="cargo_log" type="text" class="form-control" placeholder="cargo" aria-label="cargo"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">상차지</span>
+                <input id="load_log" type="text" class="form-control" placeholder="load" aria-label="load"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">전화번호</span>
+                <input id="load_pn_log" type="text" class="form-control" placeholder="load_pn" aria-label="load_pn"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">수량</span>
+                <input id="qty_log" type="text" class="form-control" placeholder="qty" aria-label="qty"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">중량</span>
+                <input id="gw_log" type="text" class="form-control" placeholder="gw" aria-label="gw"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">용적</span>
+                <input id="cbm_log" type="text" class="form-control" placeholder="cbm" aria-label="cbm"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">size</span>
+                <input id="size_log" type="text" class="form-control" placeholder="size" aria-label="size"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">하차지</span>
+                <input id="unload_log" type="text" class="form-control" placeholder="unload" aria-label="unload"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">담당자</span>
+                <input id="pic_log" type="text" class="form-control" placeholder="pic" aria-label="pic"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">시간</span>
+                <input id="load_t_log" type="text" class="form-control" placeholder="load_t" aria-label="load_t"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">운송사</span>
+                <input id="transport_log" type="text" class="form-control" placeholder="transport"
+                       aria-label="transport"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">차번</span>
+                <input id="vn_log" type="text" class="form-control" placeholder="vn" aria-label="vn"
+                       aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3"
+                 style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
+                <span class="input-group-text" id="basic-addon1">연락처</span>
+                <input id="transport_pn_log" type="text" class="form-control" placeholder="transport_pn"
+                       aria-label="transport_pn"
+                       aria-describedby="basic-addon1">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal script -->
+<script>
+    $('#nav_bar_add_box').click(function () {
+        {#alert("add_box를 눌렀습니다.")#}
+        $('#modal_add_feed').css({
+            display: 'flex'
+        })
+        $(document.body).css({
+            overflow: 'hidden'
+        })
+    })
+    $('#close_modal').on("click", () => {
+        closeModal();
+    });
+
+    function closeModal() {
+        $('#modal_add_feed').css({
+            display: 'none'
+        })
+        $(".form-control").val('');
+        $(document.body).css({
+            overflowY: 'visible'
+        })
+    }
+
+    {# 공유하기 버튼을 클릭 후 동작 #}
+    $('#log_upload').on('click', () => {
+        const date = $('#date_log').val()
+        const cargo = $('#cargo_log').val()
+        const load = $('#load_log').val()
+        const load_pn = $('#load_pn_log').val()
+        const qty = $('#qty_log').val()
+        const gw = $('#gw_log').val()
+        const cbm = $('#cbm_log').val()
+        const size = $('#size_log').val()
+        const unload = $('#unload_log').val()
+        const pic = $('#pic_log').val()
+        const load_t = $('#load_t_log').val()
+        const transport = $('#transport_log').val()
+        const vn = $('#vn_log').val()
+        const transport_pn = $('#transport_pn_log').val()
+
+        let fd = new FormData()
+
+        fd.append('date', date)
+        fd.append('cargo', cargo)
+        fd.append('load', load)
+        fd.append('load_pn', load_pn)
+        fd.append('qty', qty)
+        fd.append('gw', gw)
+        fd.append('cbm', cbm)
+        fd.append('size', size)
+        fd.append('unload', unload)
+        fd.append('pic', pic)
+        fd.append('load_t', load_t)
+        fd.append('transport', transport)
+        fd.append('vn', vn)
+        fd.append('transport_pn', transport_pn)
+
+        if (date.length <= 0) {
+            alert("날짜는 필수 입력입니다.")
+        } else {
+            writeFeed(fd)
+            console.log(date)
+        }
+    })
+
+    function writeFeed(fd) {
+        $.ajax({
+            url: "/dispatchlog/upload",
+            data: fd,
+            method: "POST",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log("성공")
+            },
+            error: function (request, status, error) {
+                console.log("에러")
+            },
+            complete: function () {
+                console.log("무조건실행")
+                closeModal()
+                location.reload()
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        $('.delete-log-button').on('click', function () {
+            const logId = $(this).data('log-id');
+            if (confirm('이 데이터를 삭제하시겠습니까?')) {
+                deleteLog(logId);
+            }
+        });
+    });
+
+    function deleteLog(logId) {
+        $.ajax({
+            url: `/dispatchlog/delete_log/${logId}/`,  // URL에 logId를 추가하여 해당 로그를 식별
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log('Success:', data);
+                location.reload()
+            },
+            error: function (request, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
