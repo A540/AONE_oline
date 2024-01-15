@@ -1,3 +1,0 @@
-## AONE Ignore File ##
-
-*.sqlite3
