@@ -24,5 +24,5 @@ urlpatterns = [
     path('', Main.as_view()),
     path('dispatchlog/', include('dispatchlog.urls')),
     path('user/', include('user.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
 
