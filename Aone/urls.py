@@ -25,3 +25,4 @@ urlpatterns = [
     path('dispatchlog/', include('dispatchlog.urls')),
     path('user/', include('user.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
