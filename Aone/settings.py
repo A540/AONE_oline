@@ -52,6 +52,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'Aone.urls'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# 그냥 넣어봄
 
 TEMPLATES = [
     {
