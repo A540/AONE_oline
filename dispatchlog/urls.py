@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import UploadLog, DeleteLogView, get_logs_by_month
+from .views import UploadLog, DeleteLogView, get_logs_by_month, Get_log
 
 urlpatterns = [
     path('upload', UploadLog.as_view()),
     path('delete_log/<int:log_id>/', DeleteLogView.as_view(), name='delete_log'),
     path('check/<str:year_month>/', get_logs_by_month, name='get_logs_by_month'),
+    path('get-log-by-id/', Get_log.as_view()),
 ]
