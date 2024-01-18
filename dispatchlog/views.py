@@ -12,7 +12,9 @@ class Main(APIView):
         month = MonthData.objects.all().order_by('-month')
         create_month_data()
 
-        username = checkauth(request)
+        check, username = checkout(request)
+        if not check:
+            return render(request, "login.html")
 
         context = {
             'log_list': log_list,
@@ -22,30 +24,34 @@ class Main(APIView):
 
         return render(request, "main.html", context=context)
 
-def checkauth(request):
+
+def checkout(request):
     username = request.session.get('username', None)
+    check = False
     if username is None:
-        return render(request, "login.html")
+        return check, username
     from django.contrib.auth.models import User
     user = User.objects.get(username=username)
     if user is None:
-        return render(request, "login.html")
+        return check, username
     else:
-        return username
+        check = True
+        return check, username
+
 
 def get_logs_by_month(request, year_month):
     # year_month를 '-'를 기준으로 분리
     year, month = year_month.split('-')
-    print(year, month)
 
     # 선택한 연도와 월에 해당하는 로그 데이터를 가져오기
     logs = Log.objects.filter(date__year=year, date__month=month)
-    month = MonthData.objects.all().order_by('-month')
+    months = MonthData.objects.all().order_by('-month')
 
     # 로그 데이터를 JSON 형태로 반환
     context = {
         'log_list': logs,
-        'month': month
+        'month': months,
+        'year_month': year_month,
     }
     return render(request, "check.html", context=context)
 
@@ -68,28 +74,29 @@ class UploadLog(APIView):
         vn = request.data.get('vn')
         transport_pn = request.data.get('transport_pn')
         print(pk)
-        log_instence, created = Log.objects.update_or_create(pk= pk, defaults={'date': date, 'cargo': cargo,
-                                                                              'load': load, 'load_pn': load_pn, 'qty': qty,
-                                                                              'gw': gw, 'cbm': cbm, 'size': size, 'unload': unload, 'pic': pic,
-                                                                              'load_t': load_t, 'transport': transport, 'vn': vn, 'transport_pn': transport_pn},)
+        log_instence, created = Log.objects.update_or_create(pk=pk, defaults={'date': date, 'cargo': cargo,
+                                                                              'load': load, 'load_pn': load_pn,
+                                                                              'qty': qty,
+                                                                              'gw': gw, 'cbm': cbm, 'size': size,
+                                                                              'unload': unload, 'pic': pic,
+                                                                              'load_t': load_t, 'transport': transport,
+                                                                              'vn': vn, 'transport_pn': transport_pn}, )
         if created:
             return Response(status=200, data=dict(message='생성완료'))
         else:
             return Response(status=203)
 
 
-
-
-
 class DeleteLogView(APIView):
     def post(self, request, log_id):
-        checkauth(request)
+        checkout(request)
         try:
             log = Log.objects.get(pk=log_id)
             log.delete()
             return Response(status=200)
         except Log.DoesNotExist:
             return Response(status=403)
+
 
 class Get_log(APIView):
     def get(self, request):

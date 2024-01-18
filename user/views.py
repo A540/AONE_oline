@@ -10,10 +10,10 @@ class Login(APIView):
         return render(request, 'login.html')
 
     def post(self, request):
-        print(request)
+        # print(request)
         username = request.data.get('username', None)
         password = request.data.get('password', None)
-        print(username, password)
+        # print(username, password)
         if username is None:
             return Response(status=500, data=dict(message='이메일을 입력해주세요'))
 

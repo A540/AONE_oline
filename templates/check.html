@@ -103,6 +103,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">출력</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/logout">
+                        <button class="material-symbols-outlined" style="border: none; background-color: #F8F9FA">
+                            logout
+                        </button>
+                    </a>
+                </li>
             </ul>
         </div>
         <div>
@@ -115,7 +122,7 @@
 <div style="display: flex; flex-direction: column">
     <div style="display: flex; flex-direction: row; justify-content: center; text-align: center; width: 100%">
         <div style="width: 100%">
-            <p style="padding: 10px; font-size: 20px">해당 날짜 넣기</p>
+            <p style="padding: 10px; font-size: 20px">{{ year_month }}</p>
         </div>
         <div style="margin-right: 30px">
             <div class="dropdown">
@@ -125,7 +132,8 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     {% for mon in month %}
-                        <li><a class="dropdown-item" href="{% url 'get_logs_by_month' mon.month %}">{{ mon.month }}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'get_logs_by_month' mon.month %}">{{ mon.month }}</a>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -135,21 +143,21 @@
         <table>
             <thead>
             <tr>
-                <th style="width: 90px">날짜</th>
-                <th style="width: 60px">화주</th>
+                <th style="width: 50px">날짜</th>
+                <th style="width: 100px">화주</th>
                 <th>상차지</th>
                 <th style="width: 120px">전화번호</th>
-                <th style="width: 63px">수량</th>
-                <th style="width: 80px">중량</th>
-                <th style="width: 80px">용적</th>
-                <th style="width: 80px">SIZE</th>
+                <th style="width: 80px">수량</th>
+                <th style="width: 100px">중량</th>
+                <th>용적</th>
+                <th>SIZE</th>
                 <th>하차지</th>
-                <th style="width: 60px">담당자</th>
+                <th style="width: 100px">담당자</th>
                 <th style="width: 40px">시간</th>
-                <th style="width: 75px">운송사</th>
+                <th style="width: 110px">운송사</th>
                 <th style="width: 125px">차번</th>
                 <th style="width: 120px">연락처</th>
-                <th style="width: 40px">삭제</th>
+                <th style="width: 40px">기능</th>
             </tr>
             </thead>
             <tbody>
