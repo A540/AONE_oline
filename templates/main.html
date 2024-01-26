@@ -164,19 +164,19 @@
             {% for log in log_list %}
                 <tr>
                     <td>{{ log.date|date:"n/d D" }}</td>
-                    <td>{{ log.cargo }}</td>
-                    <td>{{ log.load }}</td>
-                    <td>{{ log.load_pn }}</td>
-                    <td>{{ log.qty }}</td>
-                    <td>{{ log.gw }}</td>
-                    <td>{{ log.cbm }}</td>
-                    <td>{{ log.size }}</td>
-                    <td>{{ log.unload }}</td>
-                    <td>{{ log.pic }}</td>
-                    <td>{{ log.load_t }}</td>
-                    <td>{{ log.transport }}</td>
-                    <td>{{ log.vn }}</td>
-                    <td>{{ log.transport_pn }}</td>
+                    <td>{{ log.cargo|safe }}</td>
+                    <td>{{ log.load|safe }}</td>
+                    <td>{{ log.load_pn|safe }}</td>
+                    <td>{{ log.qty|safe }}</td>
+                    <td>{{ log.gw|safe }}</td>
+                    <td>{{ log.cbm|safe }}</td>
+                    <td>{{ log.size|safe }}</td>
+                    <td>{{ log.unload|safe }}</td>
+                    <td>{{ log.pic|safe }}</td>
+                    <td>{{ log.load_t|safe }}</td>
+                    <td>{{ log.transport|safe }}</td>
+                    <td>{{ log.vn|safe }}</td>
+                    <td>{{ log.transport_pn|safe }}</td>
                     <td>
                         <div class="dropdown">
                             <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
@@ -253,86 +253,80 @@
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">화주</span>
-                <input id="cargo_log" type="text" class="cargo_log form-control" placeholder="cargo" aria-label="cargo"
-                       aria-describedby="basic-addon1">
+                <label for="cargo_log"></label>
+                <textarea class="form-control" id="cargo_log" rows="3" style="height: 30px" placeholder="cargo"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">상차지</span>
-                <input id="load_log" type="text" class="load_log form-control" placeholder="load" aria-label="load"
-                       aria-describedby="basic-addon1">
+                <label for="load_log"></label>
+                <textarea class="form-control" id="load_log" rows="3" style="height: 30px" placeholder="load"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">전화번호</span>
-                <input id="load_pn_log" type="text" class="load_pn_log form-control" placeholder="load_pn"
-                       aria-label="load_pn"
-                       aria-describedby="basic-addon1">
+                <label for="load_pn_log"></label>
+                <textarea class="form-control" id="load_pn_log" rows="3" style="height: 30px" placeholder="load_pn"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">수량</span>
-                <input id="qty_log" type="text" class="qty_log form-control" placeholder="qty" aria-label="qty"
-                       aria-describedby="basic-addon1">
+                <label for="qty_log"></label>
+                <textarea class="form-control" id="qty_log" rows="3" style="height: 30px" placeholder="qty"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">중량</span>
-                <input id="gw_log" type="text" class="gw_log form-control" placeholder="gw" aria-label="gw"
-                       aria-describedby="basic-addon1">
+                <label for="gw_log"></label>
+                <textarea class="form-control" id="gw_log" rows="3" style="height: 30px" placeholder="gw"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">용적</span>
-                <input id="cbm_log" type="text" class="cbm_log form-control" placeholder="cbm" aria-label="cbm"
-                       aria-describedby="basic-addon1">
+                <label for="cbm_log"></label>
+                <textarea class="form-control" id="cbm_log" rows="3" style="height: 30px" placeholder="cbm"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">size</span>
-                <input id="size_log" type="text" class="size_log form-control" placeholder="size" aria-label="size"
-                       aria-describedby="basic-addon1">
+                <label for="size_log"></label>
+                <textarea class="form-control" id="size_log" rows="3" style="height: 30px" placeholder="size"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">하차지</span>
-                <input id="unload_log" type="text" class="unload_log form-control" placeholder="unload"
-                       aria-label="unload"
-                       aria-describedby="basic-addon1">
+                <label for="unload_log"></label>
+                <textarea class="form-control" id="unload_log" rows="3" style="height: 30px" placeholder="unload"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">담당자</span>
-                <input id="pic_log" type="text" class="pic_log form-control" placeholder="pic" aria-label="pic"
-                       aria-describedby="basic-addon1">
+                <label for="pic_log"></label>
+                <textarea class="form-control" id="pic_log" rows="3" style="height: 30px" placeholder="pic"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">시간</span>
-                <input id="load_t_log" type="text" class="load_t_log form-control" placeholder="load_t"
-                       aria-label="load_t"
-                       aria-describedby="basic-addon1">
+                <label for="load_t_log"></label>
+                <textarea class="form-control" id="load_t_log" rows="3" style="height: 30px" placeholder="load_t"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">운송사</span>
-                <input id="transport_log" type="text" class="transport_log form-control" placeholder="transport"
-                       aria-label="transport"
-                       aria-describedby="basic-addon1">
+                <label for="transport_log"></label>
+                <textarea class="form-control" id="transport_log" rows="3" style="height: 30px" placeholder="transport"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">차번</span>
-                <input id="vn_log" type="text" class="vn_log form-control" placeholder="vn" aria-label="vn"
-                       aria-describedby="basic-addon1">
+                <label for="vn_log"></label>
+                <textarea class="form-control" id="vn_log" rows="3" style="height: 30px" placeholder="vn"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">연락처</span>
-                <input id="transport_pn_log" type="text" class="transport_pn_log form-control"
-                       placeholder="transport_pn"
-                       aria-label="transport_pn"
-                       aria-describedby="basic-addon1">
+                <label for="transport_pn_log"></label>
+                <textarea class="form-control" id="transport_pn_log" rows="3" style="height: 30px" placeholder="transport_pn"></textarea>
             </div>
         </div>
     </div>
@@ -368,87 +362,80 @@
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">화주</span>
-                <input id="c-cargo_log" type="text" class="cargo_log form-control" placeholder="cargo"
-                       aria-label="cargo"
-                       aria-describedby="basic-addon1">
+                <label for="c-cargo_log"></label>
+                <textarea class="form-control" id="c-cargo_log" rows="3" style="height: 30px" placeholder="cargo"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">상차지</span>
-                <input id="c-load_log" type="text" class="load_log form-control" placeholder="load" aria-label="load"
-                       aria-describedby="basic-addon1">
+                <label for="c-load_log"></label>
+                <textarea class="form-control" id="c-load_log" rows="3" style="height: 30px" placeholder="load"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">전화번호</span>
-                <input id="c-load_pn_log" type="text" class="load_pn_log form-control" placeholder="load_pn"
-                       aria-label="load_pn"
-                       aria-describedby="basic-addon1">
+                <label for="c-load_pn_log"></label>
+                <textarea class="form-control" id="c-load_pn_log" rows="3" style="height: 30px" placeholder="load_pn"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">수량</span>
-                <input id="c-qty_log" type="text" class="qty_log form-control" placeholder="qty" aria-label="qty"
-                       aria-describedby="basic-addon1">
+                <label for="c-qty_log"></label>
+                <textarea class="form-control" id="c-qty_log" rows="3" style="height: 30px" placeholder="qty"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">중량</span>
-                <input id="c-gw_log" type="text" class="gw_log form-control" placeholder="gw" aria-label="gw"
-                       aria-describedby="basic-addon1">
+                <label for="c-gw_log"></label>
+                <textarea class="form-control" id="c-gw_log" rows="3" style="height: 30px" placeholder="gw"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">용적</span>
-                <input id="c-cbm_log" type="text" class="cbm_log form-control" placeholder="cbm" aria-label="cbm"
-                       aria-describedby="basic-addon1">
+                <label for="c-cbm_log"></label>
+                <textarea class="form-control" id="c-cbm_log" rows="3" style="height: 30px" placeholder="cbm"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">size</span>
-                <input id="c-size_log" type="text" class="size_log form-control" placeholder="size" aria-label="size"
-                       aria-describedby="basic-addon1">
+                <label for="c-size_log"></label>
+                <textarea class="form-control" id="c-size_log" rows="3" style="height: 30px" placeholder="size"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">하차지</span>
-                <input id="c-unload_log" type="text" class="unload_log form-control" placeholder="unload"
-                       aria-label="unload"
-                       aria-describedby="basic-addon1">
+                <label for="c-unload_log"></label>
+                <textarea class="form-control" id="c-unload_log" rows="3" style="height: 30px" placeholder="unload"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">담당자</span>
-                <input id="c-pic_log" type="text" class="pic_log form-control" placeholder="pic" aria-label="pic"
-                       aria-describedby="basic-addon1">
+                <label for="c-pic_log"></label>
+                <textarea class="form-control" id="c-pic_log" rows="3" style="height: 30px" placeholder="pic"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">시간</span>
-                <input id="c-load_t_log" type="text" class="load_t_log form-control" placeholder="load_t"
-                       aria-label="load_t"
-                       aria-describedby="basic-addon1">
+                <label for="c-load_t_log"></label>
+                <textarea class="form-control" id="c-load_t_log" rows="3" style="height: 30px" placeholder="load_t"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">운송사</span>
-                <input id="c-transport_log" type="text" class="transport_log form-control" placeholder="transport"
-                       aria-label="transport"
-                       aria-describedby="basic-addon1">
+                <label for="c-transport_log"></label>
+                <textarea class="form-control" id="c-transport_log" rows="3" style="height: 30px" placeholder="transport"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">차번</span>
-                <input id="c-vn_log" type="text" class="vn_log form-control" placeholder="vn" aria-label="vn"
-                       aria-describedby="basic-addon1">
+                <label for="c-vn_log"></label>
+                <textarea class="form-control" id="c-vn_log" rows="3" style="height: 30px" placeholder="vn"></textarea>
             </div>
             <div class="input-group mb-3"
                  style="padding-top: 20px; padding-left: 20px; width: 90%; margin-bottom: -1rem!important">
                 <span class="input-group-text" id="basic-addon1">연락처</span>
-                <input id="c-transport_pn_log" type="text" class="transport_pn_log form-control"
-                       placeholder="transport_pn"
-                       aria-label="transport_pn"
-                       aria-describedby="basic-addon1">
+                <label for="c-transport_pn_log"></label>
+                <textarea class="form-control" id="c-transport_pn_log" rows="3" style="height: 30px" placeholder="transport_pn"></textarea>
             </div>
         </div>
     </div>
@@ -580,7 +567,8 @@
         const load_t = $('#load_t_log').val()
         const transport = $('#transport_log').val()
         const vn = $('#vn_log').val()
-        const transport_pn = $('#transport_pn_log').val()
+        let transport_pn = $('#transport_pn_log').val()
+        transport_pn = transport_pn.split('<br>').join("\r\n");
 
         let fd = new FormData()
 

@@ -16,6 +16,34 @@ class Main(APIView):
         if not check:
             return render(request, "login.html")
 
+        for log in log_list :
+            cargo = log.cargo
+            log.cargo = cargo.replace('\r\n','<br/>')
+            load = log.load
+            log.load = load.replace('\r\n', '<br/>')
+            load_pn = log.load_pn
+            log.load_pn = load_pn.replace('\r\n', '<br/>')
+            qty = log.qty
+            log.qty = qty.replace('\r\n', '<br/>')
+            gw = log.gw
+            log.gw = gw.replace('\r\n', '<br/>')
+            cbm = log.cbm
+            log.cbm = cbm.replace('\r\n', '<br/>')
+            size = log.size
+            log.size = size.replace('\r\n', '<br/>')
+            unload = log.unload
+            log.unload = unload.replace('\r\n', '<br/>')
+            pic = log.pic
+            log.pic = pic.replace('\r\n', '<br/>')
+            load_t = log.load_t
+            log.load_t = load_t.replace('\r\n', '<br/>')
+            transport = log.transport
+            log.transport = transport.replace('\r\n', '<br/>')
+            vn = log.vn
+            log.vn = vn.replace('\r\n', '<br/>')
+            tpn = log.transport_pn
+            log.transport_pn = tpn.replace('\r\n','<br/>')
+
         context = {
             'log_list': log_list,
             'month': month,
@@ -44,8 +72,36 @@ def get_logs_by_month(request, year_month):
     year, month = year_month.split('-')
 
     # 선택한 연도와 월에 해당하는 로그 데이터를 가져오기
-    logs = Log.objects.filter(date__year=year, date__month=month)
+    logs = Log.objects.filter(date__year=year, date__month=month).order_by('-date')
     months = MonthData.objects.all().order_by('-month')
+
+    for log in logs:
+        cargo = log.cargo
+        log.cargo = cargo.replace('\r\n', '<br/>')
+        load = log.load
+        log.load = load.replace('\r\n', '<br/>')
+        load_pn = log.load_pn
+        log.load_pn = load_pn.replace('\r\n', '<br/>')
+        qty = log.qty
+        log.qty = qty.replace('\r\n', '<br/>')
+        gw = log.gw
+        log.gw = gw.replace('\r\n', '<br/>')
+        cbm = log.cbm
+        log.cbm = cbm.replace('\r\n', '<br/>')
+        size = log.size
+        log.size = size.replace('\r\n', '<br/>')
+        unload = log.unload
+        log.unload = unload.replace('\r\n', '<br/>')
+        pic = log.pic
+        log.pic = pic.replace('\r\n', '<br/>')
+        load_t = log.load_t
+        log.load_t = load_t.replace('\r\n', '<br/>')
+        transport = log.transport
+        log.transport = transport.replace('\r\n', '<br/>')
+        vn = log.vn
+        log.vn = vn.replace('\r\n', '<br/>')
+        tpn = log.transport_pn
+        log.transport_pn = tpn.replace('\r\n', '<br/>')
 
     # 로그 데이터를 JSON 형태로 반환
     context = {
@@ -105,6 +161,7 @@ class Get_log(APIView):
             log = Log.objects.get(pk=log_id)
             if log is None:
                 Response(status=203)
+
             data = {
                 'log': {
                     'id': log.id,
