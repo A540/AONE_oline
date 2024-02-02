@@ -72,7 +72,7 @@ def get_logs_by_month(request, year_month):
     year, month = year_month.split('-')
 
     # 선택한 연도와 월에 해당하는 로그 데이터를 가져오기
-    logs = Log.objects.filter(date__year=year, date__month=month).order_by('-date')
+    logs = Log.objects.filter(date__year=year, date__month=month).order_by('date')
     months = MonthData.objects.all().order_by('-month')
 
     for log in logs:
