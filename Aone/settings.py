@@ -84,10 +84,10 @@ WSGI_APPLICATION = 'Aone.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '13.209.74.74',
-        'NAME': 'Aone',                         # 데이터베이스 스키마 이름
-        'USER': 'root',
-        'PASSWORD': 'ehxhfl1720',
+        'HOST': os.environ.get('MYSQL_HOST'),
+        'NAME': os.environ.get('MYSQL_DB_NAME'),    # 스키마 이름
+        'USER': os.environ.get('MYSQL_USER'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4'},
     }
